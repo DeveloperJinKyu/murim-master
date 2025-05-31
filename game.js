@@ -14,7 +14,7 @@ function resetGame() {
   player = {
     x: size / 2 - playerSize / 2,
     y: size / 2 - playerSize / 2,
-    speed: 6,
+    speed: 11,
     dx: 0,
     dy: 0
   };
@@ -133,12 +133,42 @@ function drawArrow(a) {
   ctx.restore();
 }
 
+let moveLeft = false, moveRight = false, moveUp = false, moveDown = false;
+
+function handleKey(e) {
+  if (gameState !== 'playing') return;
+  if (e.type === 'keydown') {
+    if (e.key === 'ArrowLeft') moveLeft = true;
+    if (e.key === 'ArrowRight') moveRight = true;
+    if (e.key === 'ArrowUp') moveUp = true;
+    if (e.key === 'ArrowDown') moveDown = true;
+  } else if (e.type === 'keyup') {
+    if (e.key === 'ArrowLeft') moveLeft = false;
+    if (e.key === 'ArrowRight') moveRight = false;
+    if (e.key === 'ArrowUp') moveUp = false;
+    if (e.key === 'ArrowDown') moveDown = false;
+  }
+}
+
+function updatePlayer() {
+  if (moveLeft) player.x -= player.speed * 0.7;
+  if (moveRight) player.x += player.speed * 0.7;
+  if (moveUp) player.y -= player.speed * 0.7;
+  if (moveDown) player.y += player.speed * 0.7;
+  // 경계 체크
+  if (player.x < 0) player.x = 0;
+  if (player.x > size - playerSize) player.x = size - playerSize;
+  if (player.y < 0) player.y = 0;
+  if (player.y > size - playerSize) player.y = size - playerSize;
+}
+
 function gameLoop(ts) {
   if (gameState !== 'playing') return;
   if (!startTime) startTime = ts;
   elapsed = (ts - startTime) / 1000;
   document.getElementById('time').textContent = elapsed.toFixed(2);
   ctx.clearRect(0, 0, size, size);
+  updatePlayer();
   drawPlayer();
   for (let i = 0; i < arrows.length; i++) {
     const a = arrows[i];
@@ -161,19 +191,6 @@ function gameLoop(ts) {
   requestAnimationFrame(gameLoop);
 }
 
-function handleKey(e) {
-  if (gameState !== 'playing') return;
-  if (e.key === 'ArrowLeft') player.x -= player.speed;
-  if (e.key === 'ArrowRight') player.x += player.speed;
-  if (e.key === 'ArrowUp') player.y -= player.speed;
-  if (e.key === 'ArrowDown') player.y += player.speed;
-  // 경계 체크
-  if (player.x < 0) player.x = 0;
-  if (player.x > size - playerSize) player.x = size - playerSize;
-  if (player.y < 0) player.y = 0;
-  if (player.y > size - playerSize) player.y = size - playerSize;
-}
-
 document.getElementById('start-btn').onclick = function() {
   document.getElementById('start-screen').style.display = 'none';
   document.getElementById('game-canvas').style.display = 'block';
@@ -185,6 +202,7 @@ document.getElementById('restart-btn').onclick = function() {
   resetGame();
 };
 document.addEventListener('keydown', handleKey);
+document.addEventListener('keyup', handleKey);
 
 // 모바일 터치 이동 지원
 let touchStartX, touchStartY;
