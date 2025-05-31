@@ -1,0 +1,81 @@
+body {
+  background: #181818;
+  font-family: 'Pretendard', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+#game-container {
+  width: 600px;
+  height: 600px;
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  position: relative;
+  overflow: hidden;
+}
+.screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(24,24,24,0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+#start-screen h1 {
+  font-size: 3rem;
+  color: #00bfff;
+  margin-bottom: 30px;
+  letter-spacing: 6px;
+}
+#start-btn, #restart-btn {
+  font-size: 1.5rem;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 8px;
+  background: #00bfff;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+#start-btn:hover, #restart-btn:hover {
+  background: #0090c5;
+}
+#gameover-screen h2 {
+  color: #ff5555;
+  font-size: 2.5rem;
+}
+#final-time {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
+#timer {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 1.3rem;
+  background: rgba(0,0,0,0.3);
+  padding: 6px 24px;
+  border-radius: 12px;
+  z-index: 1;
+}
+@media (max-width: 650px) {
+  #game-container {
+    width: 100vw;
+    height: 100vw;
+    max-width: 600px;
+    max-height: 600px;
+  }
+}
