@@ -93,21 +93,16 @@ function spawnArrow() {
 }
 
 function drawPlayer() {
-  ctx.fillStyle = playerColor;
-  ctx.fillRect(player.x, player.y, playerSize, playerSize);
+  const img = document.getElementById('onionkung-img');
+  ctx.drawImage(img, player.x, player.y, playerSize, playerSize);
 }
 
 function drawArrow(a) {
+  const img = document.getElementById('arrow-img');
   ctx.save();
   ctx.translate(a.x + arrowWidth / 2, a.y + arrowWidth / 2);
   ctx.rotate(a.angle);
-  ctx.beginPath();
-  ctx.moveTo(-arrowWidth / 2, -arrowWidth / 2);
-  ctx.lineTo(arrowLength - arrowWidth / 2, 0);
-  ctx.lineTo(-arrowWidth / 2, arrowWidth / 2);
-  ctx.closePath();
-  ctx.fillStyle = arrowColor;
-  ctx.fill();
+  ctx.drawImage(img, -arrowLength / 2, -arrowWidth / 2, arrowLength, arrowWidth);
   ctx.restore();
 }
 
