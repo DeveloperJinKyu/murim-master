@@ -92,17 +92,44 @@ function spawnArrow() {
   if (gameState === 'playing') setTimeout(spawnArrow, arrowInterval);
 }
 
+let onionkungSVG, arrowSVG;
+let onionkungLoaded = false, arrowLoaded = false;
+
+function preloadImages() {
+  onionkungSVG = new Image();
+  onionkungSVG.src = 'onionkung.svg';
+  onionkungSVG.onload = () => { onionkungLoaded = true; };
+
+  arrowSVG = new Image();
+  arrowSVG.src = 'arrow.svg';
+  arrowSVG.onload = () => { arrowLoaded = true; };
+}
+preloadImages();
+
 function drawPlayer() {
-  const img = document.getElementById('onionkung-img');
-  ctx.drawImage(img, player.x, player.y, playerSize, playerSize);
+  if (onionkungLoaded) {
+    ctx.drawImage(onionkungSVG, player.x, player.y, playerSize, playerSize);
+  } else {
+    ctx.fillStyle = playerColor;
+    ctx.fillRect(player.x, player.y, playerSize, playerSize);
+  }
 }
 
 function drawArrow(a) {
-  const img = document.getElementById('arrow-img');
   ctx.save();
   ctx.translate(a.x + arrowWidth / 2, a.y + arrowWidth / 2);
   ctx.rotate(a.angle);
-  ctx.drawImage(img, -arrowLength / 2, -arrowWidth / 2, arrowLength, arrowWidth);
+  if (arrowLoaded) {
+    ctx.drawImage(arrowSVG, -arrowLength / 2, -arrowWidth / 2, arrowLength, arrowWidth);
+  } else {
+    ctx.beginPath();
+    ctx.moveTo(-arrowWidth / 2, -arrowWidth / 2);
+    ctx.lineTo(arrowLength - arrowWidth / 2, 0);
+    ctx.lineTo(-arrowWidth / 2, arrowWidth / 2);
+    ctx.closePath();
+    ctx.fillStyle = arrowColor;
+    ctx.fill();
+  }
   ctx.restore();
 }
 
