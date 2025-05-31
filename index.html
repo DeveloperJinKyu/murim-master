@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>무림고수 - 피하기 게임</title>
+  <meta name="viewport" content="width=600">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="game-container">
+    <div id="start-screen" class="screen">
+      <h1>무림고수</h1>
+      <button id="start-btn">시작하기</button>
+    </div>
+    <canvas id="game-canvas" width="600" height="600" style="display:none;"></canvas>
+    <div id="gameover-screen" class="screen" style="display:none;">
+      <h2>게임 오버!</h2>
+      <div id="final-time"></div>
+      <button id="restart-btn">다시 시작</button>
+    </div>
+    <div id="timer" style="display:none;">생존 시간: <span id="time">0.00</span>초</div>
+  </div>
+  <audio id="bgm" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9e2e2e.mp3" type="audio/mp3">
+  </audio>
+  <audio id="hit-sound">
+    <source src="https://cdn.pixabay.com/audio/2022/10/16/audio_12b3e7b1b9.mp3" type="audio/mp3">
+  </audio>
+  <script src="game.js"></script>
+</body>
+</html>
